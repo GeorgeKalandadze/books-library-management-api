@@ -13,10 +13,25 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
 class BookController extends Controller
 {
 
-    public function index(): ResourceCollection
+    public function index(Request $request): ResourceCollection
     {
-        $books = Book::with('authors')->get();
-        return BookResource::collection($books);
+        $books = Book::with('authors');
+
+        if ($request->filled('title')) {
+            $title = $request->input('title');
+            $books->where('title', 'like', "%$title%");
+        }
+
+        if ($request->filled('author_name')) {
+            $authorName = $request->input('author_name');
+            $books->whereHas('authors', function ($query) use ($authorName) {
+                $query->where('first_name', 'like', "%$authorName%")
+                    ->orWhere('last_name', 'like', "%$authorName%");
+            });
+        }
+
+        $filteredBooks = $books->get();
+        return BookResource::collection($filteredBooks);
     }
 
     public function show(Book $book): JsonResource
