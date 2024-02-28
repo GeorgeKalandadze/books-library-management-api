@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\BookStatus;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->date('publish_date');
-            $table->enum('status', ['Available', 'Booked']);
+            $table->enum('status', [BookStatus::AVAILABLE, BookStatus::BOOKED]);
             $table->timestamps();
         });
     }
