@@ -21,7 +21,7 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 });
 
 Route::middleware(['auth:sanctum'])->group(function () {
-    Route::middleware('admin')->group(function () {
+    Route::middleware('check.role:admin')->group(function () {
         Route::prefix('authors')->group(function () {
             Route::get('/', [AuthorController::class, 'index'])->name('authors.index');
             Route::post('/', [AuthorController::class, 'store'])->name('authors.store');
