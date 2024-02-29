@@ -52,7 +52,7 @@ class BookController extends Controller
 
         return response()->json([
             'message' => 'Book created successfully',
-        ]);
+        ],201);
     }
 
     public function update(BookRequest $request, Book $book): JsonResponse
