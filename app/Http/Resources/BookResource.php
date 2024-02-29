@@ -20,6 +20,8 @@ class BookResource extends JsonResource
             'status' => $this->status,
             'publish_date' => $this->publish_date,
             'authors' => AuthorResource::collection($this->whenLoaded('authors')),
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
         ];
     }
 }
