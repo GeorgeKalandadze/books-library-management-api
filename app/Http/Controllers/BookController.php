@@ -12,7 +12,6 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class BookController extends Controller
 {
-
     public function index(Request $request): ResourceCollection
     {
         $books = Book::with('authors');
@@ -31,12 +30,14 @@ class BookController extends Controller
         }
 
         $filteredBooks = $books->get();
+
         return BookResource::collection($filteredBooks);
     }
 
     public function show(Book $book): JsonResource
     {
         $book->load('authors');
+
         return new BookResource($book);
     }
 
